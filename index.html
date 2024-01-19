@@ -6,7 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-face-aframe.prod.js"></script>
     <script src="/assets/html2canvas.min.js"></script>
   </head>
-  <body id="body">
+  <body>
     <a-scene mindar-face embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
       <a-assets>
 	<a-asset-item id="glassesModel" src="/assets/scc.gltf"></a-asset-item>
@@ -29,14 +29,15 @@
     <script>
         document.querySelector("button").addEventListener("click", (e)=> {
         // do stuff here.
+            var vp = document.getElementById("viewportMeta").getAttribute("content");
+            document.getElementById("viewportMeta").setAttribute("content", "width=800");
             takeScreenshot();
+            document.getElementById("viewportMeta").setAttribute("content", vp);
         })
         function takeScreenshot() {
             // open in new window like this
             //
-            html2canvas(document.getElementById("body"), {
-                imageTimeout: 15000, //newline
-                scale:3, //newline
+            html2canvas(document.body, {
                 useCORS: true
                 }).then(function (canvas) {
                 var imageURL = canvas.toDataURL("image/jpg");
